@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.nextFTC.autonomous;
 
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.Claw;
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.Lift;
+import org.firstinspires.ftc.teamcode.nextFTC.subsystems.templates.Claw;
+import org.firstinspires.ftc.teamcode.nextFTC.subsystems.templates.Lift;
 
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.groups.SequentialGroup;
