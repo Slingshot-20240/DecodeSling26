@@ -18,6 +18,7 @@ public class OuttakeMotor implements Subsystem {
             .build();
 
 
+    //shootVel formula goes here. Temporarily hardcoded
     double shootVel = 0.5;
 
     private enum outtake_vels {
@@ -26,6 +27,7 @@ public class OuttakeMotor implements Subsystem {
         IDLE(0);
 
         private final double outtake_vels;
+
         outtake_vels(double pos) {
             this.outtake_vels = pos;
         }
