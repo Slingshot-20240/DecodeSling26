@@ -58,7 +58,7 @@ public class OuttakeMotor implements Subsystem {
     @Override
     public void periodic() {
         outtake.setPower(outtake_controller.calculate(outtake.getState()));
-        outtake.setPower(outtake_controller.calculate(outtake.getState()));
+        //outtake.setPower(outtake_controller.calculate(outtake.getState()));
 
     }
 }

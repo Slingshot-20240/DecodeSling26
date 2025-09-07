@@ -17,6 +17,7 @@ public class VariableHood implements Subsystem {
 
     double hoodAngle = Math.atan(Math.pow(OuttakeMotor.getShootVel(), 2)/(g * R));
 
+    // TODO: with a ratio, convert hoodAngle to servoPos, then set it in the command
     // TODO: test these
     public Command up = new SetPosition(
             variableHood,
