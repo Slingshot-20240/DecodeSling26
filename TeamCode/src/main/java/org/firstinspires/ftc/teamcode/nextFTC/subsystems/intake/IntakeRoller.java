@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.nextFTC.subsystems;
+package org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake;
 
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.core.commands.Command;

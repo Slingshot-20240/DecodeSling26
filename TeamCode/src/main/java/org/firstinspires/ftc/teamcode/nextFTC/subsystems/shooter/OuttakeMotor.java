@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.nextFTC.subsystems;
+package org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter;
 
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.core.commands.Command;
@@ -18,10 +18,19 @@ public class OuttakeMotor implements Subsystem {
             .build();
 
 
-    //shootVel formula goes here. Temporarily hardcoded
-    double shootVel = 0.5;
 
-    private enum outtake_vels {
+    private static final double launchHeight = 0; // TODO update this with CAD
+    private static final double g = 9.81;
+    private static final double H = 39 - launchHeight; // y distance, cm distance from launch height to a little above hole on goal
+    private static double R; // x distance, get from AprilTag
+
+    private static final double shootVel = Math.sqrt(H * g + g * Math.sqrt(Math.pow(R, 2) + Math.pow(H, 2)));
+
+    public static double getShootVel() {
+        return shootVel;
+    }
+
+    public enum outtake_vels {
 
         SHOOT(shootVel),
         IDLE(0);

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
@@ -19,8 +18,6 @@ public class Robot {
     private IMU imu;
 
     public Command driverControlled;
-
-
 
     public Robot(HardwareMap hardwareMap) {
         leftFront = new MotorEx("fL");
@@ -40,5 +37,6 @@ public class Robot {
                 Gamepads.gamepad1().leftStickX(),
                 Gamepads.gamepad1().rightStickX()
         );
+
     }
 }
