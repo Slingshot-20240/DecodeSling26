@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.nextFTC.subsystems;
+package org.firstinspires.ftc.teamcode.nextFTC.subsystems.templates;
 
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.subsystems.Subsystem;
