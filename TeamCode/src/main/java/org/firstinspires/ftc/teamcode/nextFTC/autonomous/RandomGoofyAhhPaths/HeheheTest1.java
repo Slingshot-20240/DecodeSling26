@@ -9,6 +9,7 @@ import com.pedropathing.paths.PathChain;
 
 public class HeheheTest1 {
 
+    //figure this out before going to bed
     public static PathBuilder builder = new PathBuilder();
 
     public static PathChain line1 = builder
