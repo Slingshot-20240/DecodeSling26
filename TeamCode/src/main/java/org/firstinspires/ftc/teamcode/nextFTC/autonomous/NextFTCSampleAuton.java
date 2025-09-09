@@ -17,6 +17,7 @@ import dev.nextftc.ftc.components.BulkReadComponent;
 public class NextFTCSampleAuton extends NextFTCOpMode {
 
     public NextFTCSampleAuton() {
+        
         addComponents(
                 new SubsystemComponent(
                         //Here you get AutonSequencesGroup instance
