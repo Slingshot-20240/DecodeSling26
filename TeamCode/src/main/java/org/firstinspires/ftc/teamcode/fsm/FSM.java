@@ -5,13 +5,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.misc.gamepad.GamepadMapping;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.IntakeRoller;
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.OuttakeMotor;
+import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.Shooter;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.VariableHood;
 
 public class FSM {
 
     public Robot robot;
     public FSMStates state = FSMStates.BASE_STATE;
+    public ControlType type = ControlType.HARDCODED_CONTROL;
     private GamepadMapping gamepad;
 
     public FSM(HardwareMap hardwareMap, GamepadMapping gamepad) {
@@ -26,18 +27,17 @@ public class FSM {
         switch (state) {
             case BASE_STATE:
                 // TODO: change buttons to what Viktor & Arhaan want, also test button jawns
-
-                VariableHood.INSTANCE.up.schedule();
-                // Turret at rest
-                // Intake lowered
-                // Park retracted
+                // Hardcoded Control only, set hood to up position for scoring
+                if (type == ControlType.HARDCODED_CONTROL) {
+                    VariableHood.INSTANCE.upTriangle.schedule();
+                }
 
                 gamepad.intake
                         .toggleOnBecomesTrue()
                         .whenBecomesTrue(IntakeRoller.INSTANCE.in)
                         .whenBecomesFalse(IntakeRoller.INSTANCE.idle);
 
-                if (gamepad.shoot.get()) {
+                if (gamepad.pidShoot.get() || gamepad.shootTriangle.get() || gamepad.shootBack.get()) {
                     state = FSMStates.SHOOTING;
                 }
 
@@ -47,19 +47,33 @@ public class FSM {
                 break;
 
             case SHOOTING:
-                // choose color (concurrent)
-                // adjust angle (concurrent)
-                // hold to shoot with a small wait
+                // Hardcoded control AND we're at the back shooting zone
+                if (type == ControlType.HARDCODED_CONTROL && gamepad.shootBack.get()) {
+                    gamepad.shootBack
+                            .whenTrue(Shooter.INSTANCE.backShoot.and(VariableHood.INSTANCE.downBack))
+                            // TODO wait needed?
+                            .whenFalse(Shooter.INSTANCE.idle);
+                }
+                // Hardcoded control AND we're at the tip of the triangle of the front shooting zone
+                else if (type == ControlType.HARDCODED_CONTROL && gamepad.shootTriangle.get()) {
+                    gamepad.shootTriangle
+                            .whenTrue(Shooter.INSTANCE.triangleShoot.and(VariableHood.INSTANCE.upTriangle))
+                            // TODO wait needed?
+                            .whenFalse(Shooter.INSTANCE.idle);
+                }
+                // PID control that adjusts depending on our distance - TO BE IMPLEMENTED
+                else if (type == ControlType.PID_CONTROL && gamepad.pidShoot.get()) {
+                    gamepad.pidShoot
+                            .whenTrue(Shooter.INSTANCE.pidShoot)
+                            // TODO wait somehow
+                            .whenFalse(Shooter.INSTANCE.idle);
 
-                // TODO: THEORETICAL METHODS
-                // ColorPicker.INSTANCE.chooseColor.schedule() -> maybe Instant command
-                // VariableHood.INSTANCE.adjust.schedule()
-                gamepad.shoot
-                        .whenTrue(OuttakeMotor.INSTANCE.shoot)
-                        // TODO wait somehow
-                        .whenFalse(OuttakeMotor.INSTANCE.idle);
-
-                if (!gamepad.shoot.get()) {
+                            // TODO: THEORETICAL METHODS
+                            // ColorPicker.INSTANCE.chooseColor.schedule() -> maybe Instant command
+                            // VariableHood.INSTANCE.adjust.schedule()
+                }
+                // Return to base state if shooting is false
+                if (!gamepad.pidShoot.get() || !gamepad.shootTriangle.get() || !gamepad.shootBack.get()) {
                     state = FSMStates.BASE_STATE;
                 }
                 break;
@@ -81,6 +95,11 @@ public class FSM {
     public enum FSMStates {
         BASE_STATE,
         SHOOTING,
-        PARK
+        PARK,
+    }
+
+    public enum ControlType {
+        HARDCODED_CONTROL,
+        PID_CONTROL
     }
 }

@@ -15,16 +15,16 @@ public class VariableHood implements Subsystem {
     private static final double g = 9.81;
     private static double R; // get from April Tag, x distance
 
-    double hoodAngle = Math.atan(Math.pow(OuttakeMotor.getShootVel(), 2)/(g * R));
+    double hoodAngle = Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * R));
 
     // TODO: test these
-    public Command up = new SetPosition(
+    public Command upTriangle = new SetPosition(
             variableHood,
             0.1
     ).requires(this);
 
 
-    public Command down = new SetPosition(
+    public Command downBack = new SetPosition(
             variableHood,
             0.2
     ).requires(this);
