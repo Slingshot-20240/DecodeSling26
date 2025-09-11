@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.misc.gamepad.GamepadMapping;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.IntakeRoller;
+import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.Transfer;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.Shooter;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.VariableHood;
 
@@ -88,6 +89,13 @@ public class FSM {
                 if (!gamepad.park.get()) {
                     state = FSMStates.BASE_STATE;
                 }
+
+            case TRANSFER:
+                gamepad.transfer
+                        .toggleOnBecomesTrue()
+                        .whenBecomesTrue(Transfer.INSTANCE.up);
+                        // TODO Constantly running?
+                        // .whenBecomesFalse(Transfer.INSTANCE.idle);
         }
 
     }
@@ -96,6 +104,7 @@ public class FSM {
         BASE_STATE,
         SHOOTING,
         PARK,
+        TRANSFER
     }
 
     public enum ControlType {

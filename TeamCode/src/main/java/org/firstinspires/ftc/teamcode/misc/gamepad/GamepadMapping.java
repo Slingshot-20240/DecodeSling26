@@ -12,6 +12,7 @@ public class GamepadMapping {
     public Button pidShoot;
     public Button shootBack;
     public Button shootTriangle;
+    public Button transfer;
 
     // PARK
     public Button park;
@@ -22,6 +23,7 @@ public class GamepadMapping {
         intake = Gamepads.gamepad1().rightBumper();
         pidShoot = Gamepads.gamepad2().a();
         park = Gamepads.gamepad1().dpadUp();
+        transfer = Gamepads.gamepad1().b();
     }
 }
 
