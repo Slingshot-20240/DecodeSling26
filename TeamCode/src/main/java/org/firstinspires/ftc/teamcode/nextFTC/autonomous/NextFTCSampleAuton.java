@@ -38,10 +38,7 @@ public class NextFTCSampleAuton extends NextFTCOpMode {
                         Claw.INSTANCE.close
                 ),
                 new Delay(0.5),
-                new ParallelGroup(
-                        Claw.INSTANCE.open,
-                        Lift.INSTANCE.toLow
-                )
+                AutonSequencesGroup.INSTANCE.score
         );
     }
 
