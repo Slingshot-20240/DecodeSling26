@@ -12,8 +12,8 @@ public class IntakeRoller implements Subsystem {
 
     private final MotorEx intakeRoller = new MotorEx("intakeRoller");
 
-    private final ControlSystem lift_controller = ControlSystem.builder()
-            .posPid(0.005, 0, 0) //lift_controller
+    private final ControlSystem intake_controller = ControlSystem.builder()
+            .posPid(0.005, 0, 0) //intake_controller
             .elevatorFF(0) //compensates for gravity
             .build();
 
@@ -32,23 +32,23 @@ public class IntakeRoller implements Subsystem {
     }
 
     public Command in = new RunToVelocity(
-            lift_controller,
+            intake_controller,
             intake_speeds.IN.getSpeed()
     ).requires(this);
 
     public Command out = new RunToVelocity(
-            lift_controller,
+            intake_controller,
             intake_speeds.OUT.getSpeed()
     ).requires(this);
 
     public Command idle = new RunToVelocity(
-            lift_controller,
+            intake_controller,
             intake_speeds.IDLE.getSpeed()
     ).requires(this);
 
 
     @Override
     public void periodic() {
-        intakeRoller.setPower(lift_controller.calculate(intakeRoller.getState()));
+        intakeRoller.setPower(intake_controller.calculate(intakeRoller.getState()));
     }
 }

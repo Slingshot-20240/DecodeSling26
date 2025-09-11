@@ -5,19 +5,19 @@ import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.hardware.impl.ServoEx;
 import dev.nextftc.hardware.positionable.SetPosition;
 
-public class Claw implements Subsystem {
-    public static final Claw INSTANCE = new Claw();
-    private Claw() { }
+public class Servo_Template implements Subsystem {
+    public static final Servo_Template INSTANCE = new Servo_Template();
+    private Servo_Template() { }
 
-    private final ServoEx claw = new ServoEx("claw");
+    private final ServoEx servo = new ServoEx("servo");
 
     public Command open = new SetPosition(
-            claw,
+            servo,
             0.1
     ).requires(this);
 
     public Command close = new SetPosition(
-            claw,
+            servo,
             0.2
     ).requires(this);
 }
