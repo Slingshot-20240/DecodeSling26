@@ -96,6 +96,11 @@ public class FSM {
                         .whenBecomesTrue(Transfer.INSTANCE.up);
                         // TODO Constantly running?
                         // .whenBecomesFalse(Transfer.INSTANCE.idle);
+
+//                if (!gamepad.transfer.get()) {
+//                    state = FSMStates.BASE_STATE;
+//                }
+                //yo - idk ts sorry broskis
         }
 
     }

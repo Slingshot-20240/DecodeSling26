@@ -20,10 +20,10 @@ public class Robot {
     public Command driverControlled;
 
     public Robot(HardwareMap hardwareMap) {
-        leftFront = new MotorEx("fL");
-        rightFront = new MotorEx("rF");
-        leftBack = new MotorEx("lB");
-        rightBack = new MotorEx("rB");
+fsm        leftFront = new MotorEx("frontLeft");
+        rightFront = new MotorEx("rightFront");
+        leftBack = new MotorEx("leftBack");
+        rightBack = new MotorEx("rightBack");
 
         imu = hardwareMap.get(IMU.class, "imu");
         imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(
