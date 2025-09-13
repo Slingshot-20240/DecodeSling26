@@ -30,7 +30,6 @@ public class Transfer implements Subsystem {
         public double getSpeed() {
             return transfer_states;
         }
-
     }
 
     public Command up = new RunToVelocity(
