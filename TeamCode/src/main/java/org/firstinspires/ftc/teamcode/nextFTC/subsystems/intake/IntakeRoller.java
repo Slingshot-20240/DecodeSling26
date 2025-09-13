@@ -46,6 +46,9 @@ public class IntakeRoller implements Subsystem {
             intake_speeds.IDLE.getSpeed()
     ).requires(this);
 
+    public void setIntakePower(double power) {
+        intakeRoller.setPower(power);
+    }
 
     @Override
     public void periodic() {

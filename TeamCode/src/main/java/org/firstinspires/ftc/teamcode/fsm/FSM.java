@@ -29,6 +29,9 @@ public class FSM {
             case BASE_STATE:
                 // TODO: change buttons to what Viktor & Arhaan want, also test button jawns
                 // Hardcoded Control only, set hood to up position for scoring
+
+
+
                 if (type == ControlType.HARDCODED_CONTROL) {
                     VariableHood.INSTANCE.upTriangle.schedule();
                 }
@@ -91,6 +94,7 @@ public class FSM {
                 }
 
             case TRANSFER:
+                // TODO we may not want to have a seperate state for this
                 gamepad.transfer
                         .toggleOnBecomesTrue()
                         .whenBecomesTrue(Transfer.INSTANCE.up);
