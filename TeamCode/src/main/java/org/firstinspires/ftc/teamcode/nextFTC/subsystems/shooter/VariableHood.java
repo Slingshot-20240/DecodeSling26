@@ -15,7 +15,7 @@ public class VariableHood implements Subsystem {
     private static final double g = 9.81;
     private static double R; // get from April Tag, x distance
 
-    double hoodAngle = Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * R));
+    // double hoodAngle = Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * R));
 
     // TODO: with a ratio, convert hoodAngle to servoPos, then set it in the command
     // TODO: test these

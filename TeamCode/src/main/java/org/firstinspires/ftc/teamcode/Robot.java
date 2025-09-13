@@ -20,7 +20,7 @@ public class Robot {
     public Command driverControlled;
 
     public Robot(HardwareMap hardwareMap) {
-fsm        leftFront = new MotorEx("frontLeft");
+        leftFront = new MotorEx("frontLeft");
         rightFront = new MotorEx("rightFront");
         leftBack = new MotorEx("leftBack");
         rightBack = new MotorEx("rightBack");

@@ -52,35 +52,35 @@ public class FSM {
 
             case SHOOTING:
                 // Hardcoded control AND we're at the back shooting zone
-                if (type == ControlType.HARDCODED_CONTROL && gamepad.shootBack.get()) {
-                    gamepad.shootBack
-                            .whenTrue(Shooter.INSTANCE.backShoot.and(VariableHood.INSTANCE.downBack))
-                            // TODO wait needed?
-                            .whenFalse(Shooter.INSTANCE.idle);
-                }
-                // Hardcoded control AND we're at the tip of the triangle of the front shooting zone
-                else if (type == ControlType.HARDCODED_CONTROL && gamepad.shootTriangle.get()) {
-                    gamepad.shootTriangle
-                            .whenTrue(Shooter.INSTANCE.triangleShoot.and(VariableHood.INSTANCE.upTriangle))
-                            // TODO wait needed?
-                            .whenFalse(Shooter.INSTANCE.idle);
-                }
-                // PID control that adjusts depending on our distance - TO BE IMPLEMENTED
-                else if (type == ControlType.PID_CONTROL && gamepad.pidShoot.get()) {
-                    gamepad.pidShoot
-                            .whenTrue(Shooter.INSTANCE.pidShoot)
-                            // TODO wait somehow
-                            .whenFalse(Shooter.INSTANCE.idle);
+//                if (type == ControlType.HARDCODED_CONTROL && gamepad.shootBack.get()) {
+//                    gamepad.shootBack
+//                            .whenTrue(Shooter.INSTANCE.backShoot.and(VariableHood.INSTANCE.downBack))
+//                            // TODO wait needed?
+//                            .whenFalse(Shooter.INSTANCE.idle);
+//                }
+//                // Hardcoded control AND we're at the tip of the triangle of the front shooting zone
+//                else if (type == ControlType.HARDCODED_CONTROL && gamepad.shootTriangle.get()) {
+//                    gamepad.shootTriangle
+//                            .whenTrue(Shooter.INSTANCE.triangleShoot.and(VariableHood.INSTANCE.upTriangle))
+//                            // TODO wait needed?
+//                            .whenFalse(Shooter.INSTANCE.idle);
+//                }
+//                // PID control that adjusts depending on our distance - TO BE IMPLEMENTED
+//                else if (type == ControlType.PID_CONTROL && gamepad.pidShoot.get()) {
+//                    gamepad.pidShoot
+//                            .whenTrue(Shooter.INSTANCE.pidShoot)
+//                            // TODO wait somehow
+//                            .whenFalse(Shooter.INSTANCE.idle);
 
                             // TODO: THEORETICAL METHODS
                             // ColorPicker.INSTANCE.chooseColor.schedule() -> maybe Instant command
                             // VariableHood.INSTANCE.adjust.schedule()
-                }
+                //}
                 // Return to base state if shooting is false
-                if (!gamepad.pidShoot.get() || !gamepad.shootTriangle.get() || !gamepad.shootBack.get()) {
-                    state = FSMStates.BASE_STATE;
-                }
-                break;
+//                if (!gamepad.pidShoot.get() || !gamepad.shootTriangle.get() || !gamepad.shootBack.get()) {
+//                    state = FSMStates.BASE_STATE;
+//                }
+//                break;
 
             case PARK:
                 gamepad.park
@@ -121,3 +121,4 @@ public class FSM {
         PID_CONTROL
     }
 }
+

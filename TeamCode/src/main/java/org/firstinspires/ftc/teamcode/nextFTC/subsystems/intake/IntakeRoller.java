@@ -10,7 +10,8 @@ public class IntakeRoller implements Subsystem {
     public static final IntakeRoller INSTANCE = new IntakeRoller();
     private IntakeRoller() { }
 
-    private final MotorEx intakeRoller = new MotorEx("intakeRoller");
+    private final MotorEx intakeRollerL = new MotorEx("intakeRollerLeft");
+    private final MotorEx intakeRollerR = new MotorEx("intakeRollerRight");
 
     private final ControlSystem intake_controller = ControlSystem.builder()
             .posPid(0.005, 0, 0) //intake_controller
@@ -46,12 +47,14 @@ public class IntakeRoller implements Subsystem {
             intake_speeds.IDLE.getSpeed()
     ).requires(this);
 
-    public void setIntakePower(double power) {
-        intakeRoller.setPower(power);
+    public void setIntakePower(double lPower, double rPower) {
+        intakeRollerL.setPower(lPower);
+        intakeRollerR.setPower(rPower);
     }
 
     @Override
     public void periodic() {
-        intakeRoller.setPower(intake_controller.calculate(intakeRoller.getState()));
+        intakeRollerL.setPower(intake_controller.calculate(intakeRollerL.getState()));
+        intakeRollerR.setPower(intake_controller.calculate(intakeRollerR.getState()));
     }
 }
