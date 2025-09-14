@@ -12,6 +12,9 @@ public class Shooter implements Subsystem {
     public static final Shooter INSTANCE = new Shooter();
     private Shooter() { }
 
+    double time;
+
+
     // Motors for shooter
     private final MotorEx outtake1 = new MotorEx("outtake1");
     private final MotorEx outtake2 = new MotorEx("outtake2");
@@ -22,7 +25,7 @@ public class Shooter implements Subsystem {
 
     private final ControlSystem outtake_controller = ControlSystem.builder()
             .posPid(0.005, 0, 0) //out_controller
-            .elevatorFF(0) //compensates for gravity
+            //.elevatorFF(0) //compensates for gravity
             .build();
 
     private static final double launchHeight = 0; // TODO update this with CAD
@@ -83,10 +86,27 @@ public class Shooter implements Subsystem {
         spin2.setPosition(spin1.getPosition() - .1); // TODO: REVERSE AND MAKE ANALOG METHODS FOR GET POSITION
     }
 
+    public void pidLoop() {
+        time += 0.02; // ~50 Hz loop
+
+        //sine wave/varieble setpoint between 2000 and 5000 ticks/sec
+        double targetVel = 3500 + 1500 * Math.sin(2 * Math.PI * 0.5 * time);
+
+        // Send target to REV Hub PID
+        //outtake1.setVelocity(targetVel); // converted to nextFTC runtovel as shown below
+        new RunToVelocity(
+                outtake_controller,
+                targetVel
+        );
+
+        // Read actual velocity
+        double actualVel = outtake1.getVelocity();
+    }
+
     @Override
     public void periodic() {
         outtake1.setPower(outtake_controller.calculate(outtake1.getState()));
         outtake2.setPower(outtake_controller.calculate(outtake2.getState()));
-
+        pidLoop();
     }
 }

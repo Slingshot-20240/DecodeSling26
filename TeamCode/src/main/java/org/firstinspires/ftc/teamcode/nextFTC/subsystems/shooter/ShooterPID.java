@@ -33,8 +33,8 @@ public class ShooterPID extends NextFTCOpMode {
             double actualVel = flywheel.getVelocity();
 
             // Telemetry
-            telemetry.addData("Target (ticks/s)", targetVel);
-            telemetry.addData("Actual (ticks/s)", actualVel);
+            telemetry.addData("Target (ticks/s): ", targetVel);
+            telemetry.addData("Actual (ticks/s): ", actualVel);
             telemetry.update();
 
             sleep(20);
