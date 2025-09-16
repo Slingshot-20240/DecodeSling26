@@ -20,32 +20,20 @@ import dev.nextftc.ftc.NextFTCOpMode;
 public class ShooterTest extends OpMode {
     private Telemetry dashboardTelemetry;
     private GamepadMapping controls;
-    public static double Lpower = 0;
-    public static double Rpower = 0;
-    public static boolean gamepadControl = false;
+    public static double power = 0;
     private Shooter shooter;
+
     @Override
     public void init() {
         shooter = new Shooter(hardwareMap);
         // controls = new GamepadMapping();
         dashboardTelemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
-
-
     }
 
     @Override
     public void loop() {
-//        if (gamepadControl) {
-//            controls.intake
-//                    .toggleOnBecomesTrue()
-//                    .whenBecomesTrue(IntakeRoller.INSTANCE.in)
-//                    .whenBecomesFalse(IntakeRoller.INSTANCE.out);
-//        } else {
-//            Shooter.INSTANCE.setShooterPower(Lpower, Rpower);
-//        }
-        shooter.setShooterPower(Lpower, Rpower);
-        dashboardTelemetry.addData("actual velo", shooter.outtakeL.getVelocity(AngleUnit.RADIANS));
-
+        shooter.setShooterPower(power);
+        dashboardTelemetry.addData("actual velo", shooter.teleOuttakeL.getVelocity(AngleUnit.RADIANS));
         dashboardTelemetry.update();
     }
 }
