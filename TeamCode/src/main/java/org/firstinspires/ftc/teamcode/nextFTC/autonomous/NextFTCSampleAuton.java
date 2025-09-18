@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.nextFTC.autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.templates.Servo_Template;
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.templates.Lift;
+import org.firstinspires.ftc.teamcode.nextFTC.subsystems.templates.Motor;
 
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.delays.Delay;
@@ -23,7 +23,7 @@ public class NextFTCSampleAuton extends NextFTCOpMode {
                         //Here you get AutonSequencesGroup instance
                         AutonSequencesGroup.INSTANCE,
                         //Here you get individual subsystem instances
-                        Lift.INSTANCE, Servo_Template.INSTANCE
+                        Motor.INSTANCE, Servo_Template.INSTANCE
                 ),
                 //You use this when reading multiple instances
                 BulkReadComponent.INSTANCE
@@ -32,9 +32,9 @@ public class NextFTCSampleAuton extends NextFTCOpMode {
 
     private Command autonomousRoutine() {
         return new SequentialGroup(
-                Lift.INSTANCE.toHigh,
+                Motor.INSTANCE.toHigh,
                 new ParallelGroup(
-                        Lift.INSTANCE.toTransfer,
+                        Motor.INSTANCE.toTransfer,
                         Servo_Template.INSTANCE.close
                 ),
                 new Delay(0.5),
