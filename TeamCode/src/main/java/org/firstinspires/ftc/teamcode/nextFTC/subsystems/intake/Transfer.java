@@ -15,7 +15,7 @@ public class Transfer implements Subsystem {
 
     private final ControlSystem transfer_controller = ControlSystem.builder()
             .posPid(0.005, 0, 0) //transfer_controller
-            .elevatorFF(0) //compensates for gravity
+            //.elevatorFF(0) //compensates for gravity
             .build();
 
     private enum transfer_states {
