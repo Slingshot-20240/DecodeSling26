@@ -13,7 +13,7 @@ public class ShooterPID extends NextFTCOpMode {
     @Override
     public void runOpMode() {
         flywheel = hardwareMap.get(DcMotorEx.class, "flywheel");
-
+        
         // Set PIDF (start with defaults, tune later)
         flywheel.setVelocityPIDFCoefficients(0.2, 2.0, 0.002, 0.0);
 
