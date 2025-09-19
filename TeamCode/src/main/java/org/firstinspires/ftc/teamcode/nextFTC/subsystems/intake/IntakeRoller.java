@@ -7,54 +7,53 @@ import dev.nextftc.hardware.controllable.RunToVelocity;
 import dev.nextftc.hardware.impl.MotorEx;
 
 public class IntakeRoller implements Subsystem {
+
     public static final IntakeRoller INSTANCE = new IntakeRoller();
     private IntakeRoller() { }
 
-    private final MotorEx intakeRollerL = new MotorEx("intakeRollerLeft");
-    private final MotorEx intakeRollerR = new MotorEx("intakeRollerRight");
+    private final MotorEx intakeRoller = new MotorEx("intake");
 
     private final ControlSystem intake_controller = ControlSystem.builder()
             .posPid(0.005, 0, 0) //intake_controller
-            .elevatorFF(0) //compensates for gravity
+            //.elevatorFF(0) //compensates for gravity
             .build();
 
-    private enum intake_speeds {
+    private enum intake_vels {
         IN(0.7),
         OUT(-0.7),
         IDLE(0.0);
 
-        private final double intake_speeds;
-        intake_speeds(double pos) {
-            this.intake_speeds = pos;
+        private final double intake_vels;
+        intake_vels(double pos) {
+            this.intake_vels = pos;
         }
         public double getSpeed() {
-            return intake_speeds;
+            return intake_vels;
         }
     }
 
     public Command in = new RunToVelocity(
             intake_controller,
-            intake_speeds.IN.getSpeed()
+            intake_vels.IN.getSpeed()
     ).requires(this);
 
     public Command out = new RunToVelocity(
             intake_controller,
-            intake_speeds.OUT.getSpeed()
+            intake_vels.OUT.getSpeed()
     ).requires(this);
 
     public Command idle = new RunToVelocity(
             intake_controller,
-            intake_speeds.IDLE.getSpeed()
+            intake_vels.IDLE.getSpeed()
     ).requires(this);
 
-    public void setIntakePower(double lPower, double rPower) {
-        intakeRollerL.setPower(lPower);
-        intakeRollerR.setPower(rPower);
+
+    public void setIntakePower(double power) {
+        intakeRoller.setPower(power);
     }
 
     @Override
     public void periodic() {
-        intakeRollerL.setPower(intake_controller.calculate(intakeRollerL.getState()));
-        intakeRollerR.setPower(intake_controller.calculate(intakeRollerR.getState()));
+        intakeRoller.setPower(intake_controller.calculate(intakeRoller.getState()));
     }
 }
