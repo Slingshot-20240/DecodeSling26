@@ -30,9 +30,9 @@ public class Turret {
 
     // TURRET CALCULATIONS
     // ----------------------------------
-    private double turretEncoderVal = 0;
+    private int turretEncoderVal = 0;
 
-    public double calcTurretVal() {
+    public int calcTurretVal() {
         // TODO: WITH MOTT'S THING
         return turretEncoderVal;
     }
@@ -80,5 +80,10 @@ public class Turret {
     public void shootFrontRed() {
         teleTurret.setTargetPosition(400);
         teleTurret.setPower(1);
+    }
+
+    public void setTurretPos(int pos, double power) {
+        teleTurret.setTargetPosition(pos);
+        teleTurret.setPower(power);
     }
 }

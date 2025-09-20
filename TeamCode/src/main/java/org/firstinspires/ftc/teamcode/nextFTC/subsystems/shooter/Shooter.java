@@ -28,6 +28,9 @@ public class Shooter implements Subsystem {
     public DcMotorEx teleOuttakeR;
     public Servo teleVariableHood;
 
+    private final double backHardcodedVel = 1;
+    private final double frontHardcodedVel = .5;
+
     public Shooter (HardwareMap hwMap) {
         teleOuttakeL = hwMap.get(DcMotorEx.class, "outtakeLeft");
         teleOuttakeR = hwMap.get(DcMotorEx.class, "outtakeRight");
@@ -133,6 +136,10 @@ public class Shooter implements Subsystem {
         teleOuttakeR.setPower(power);
     }
 
+    public void setHoodAngle(double angle) {
+        teleVariableHood.setPosition(angle);
+    }
+
     public static double getShootVel() {
         return shootVel;
     }
@@ -144,5 +151,15 @@ public class Shooter implements Subsystem {
 
     public void hoodToFrontTriPos() {
         teleVariableHood.setPosition(0);
+    }
+
+    public void teleShootFromBack() {
+        teleOuttakeL.setPower(backHardcodedVel);
+        teleOuttakeR.setPower(backHardcodedVel);
+    }
+
+    public void teleShootFromFront() {
+        teleOuttakeL.setPower(frontHardcodedVel);
+        teleOuttakeR.setPower(frontHardcodedVel);
     }
 }
