@@ -4,10 +4,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.misc.gamepad.GamepadMapping;
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.IntakeRoller;
+import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.Intake;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.Transfer;
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.Shooter;
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.VariableHood;
 
 public class FSM {
 
@@ -41,8 +39,8 @@ public class FSM {
 
                 gamepad.intake
                         .toggleOnBecomesTrue()
-                        .whenBecomesTrue(IntakeRoller.INSTANCE.in)
-                        .whenBecomesFalse(IntakeRoller.INSTANCE.idle);
+                        .whenBecomesTrue(Intake.INSTANCE.in)
+                        .whenBecomesFalse(Intake.INSTANCE.idle);
 
                 if (gamepad.pidShoot.get() || gamepad.shootTriangle.get() || gamepad.shootBack.get()) {
                     state = FSMStates.SHOOTING;

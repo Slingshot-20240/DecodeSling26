@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.teleop.servoTests;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.VariableHood;
-
 import dev.nextftc.ftc.NextFTCOpMode;
 import dev.nextftc.hardware.impl.ServoEx;
 

@@ -31,12 +31,5 @@ public class Robot {
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD)));
         imu.resetYaw();
 
-        driverControlled = new MecanumDriverControlled(
-                leftFront, rightFront, leftBack, rightBack,
-                Gamepads.gamepad1().leftStickY(),
-                Gamepads.gamepad1().leftStickX(),
-                Gamepads.gamepad1().rightStickX()
-        );
-
     }
 }

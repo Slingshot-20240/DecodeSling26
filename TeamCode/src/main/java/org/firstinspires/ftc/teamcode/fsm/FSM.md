@@ -12,3 +12,10 @@
 1. One button to fire all 3 balls, little waits in between each ball, after done goes back to ready to intake
 2. One button to scoring position? (not sure how we're going to set this poistion each time in tele - I need to
 think about this more)
+
+Mecanisms
+- Intake
+- Shooter
+- Hood? - part of shooter
+- Turret
+- Transfer
