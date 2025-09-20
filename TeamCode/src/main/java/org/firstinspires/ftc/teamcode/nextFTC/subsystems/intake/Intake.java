@@ -32,33 +32,34 @@ public class Intake implements Subsystem {
             //.elevatorFF(0) //compensates for gravity
             .build();
 
-    private enum intake_vels {
+    private enum intakeVals {
         IN(0.7),
         OUT(-0.7),
         IDLE(0.0);
 
-        private final double intake_vels;
-        intake_vels(double pos) {
-            this.intake_vels = pos;
+        private final double intake_vals;
+
+        intakeVals(double pos) {
+            this.intake_vals = pos;
         }
         public double getSpeed() {
-            return intake_vels;
+            return intake_vals;
         }
     }
 
     public Command in = new RunToVelocity(
             intake_controller,
-            intake_vels.IN.getSpeed()
+            intakeVals.IN.getSpeed()
     ).requires(this);
 
     public Command out = new RunToVelocity(
             intake_controller,
-            intake_vels.OUT.getSpeed()
+            intakeVals.OUT.getSpeed()
     ).requires(this);
 
     public Command idle = new RunToVelocity(
             intake_controller,
-            intake_vels.IDLE.getSpeed()
+            intakeVals.IDLE.getSpeed()
     ).requires(this);
 
     @Override
