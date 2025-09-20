@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.nextFTC.autonomous;
 
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.templates.CRServo_Template;
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.templates.Servo_Template;
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.templates.Motor;
+import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.Intake;
+import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.Transfer;
+import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.Shooter;
+
 
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.groups.SequentialGroup;
@@ -13,14 +14,13 @@ public class AutonSequencesGroup extends SubsystemGroup {
 
     private AutonSequencesGroup() {
         super(
-                Servo_Template.INSTANCE,
-                Motor.INSTANCE
+                Intake.INSTANCE, Transfer.INSTANCE, Shooter.INSTANCE
         );
     }
 
-    public final Command score = new SequentialGroup(
-            Motor.INSTANCE.toHigh,
-            Servo_Template.INSTANCE.open
-    ).named("Score"); //Used to find bugs in logging
+    public final Command intake = new SequentialGroup(
+            Intake.INSTANCE.in,
+            Transfer.INSTANCE.up
+    ).named("Intake"); //Used to find bugs in logging
 
 }
