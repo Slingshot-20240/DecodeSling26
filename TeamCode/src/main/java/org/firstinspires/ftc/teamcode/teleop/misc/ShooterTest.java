@@ -26,7 +26,6 @@ public class ShooterTest extends OpMode {
     @Override
     public void init() {
         shooter = new Shooter(hardwareMap);
-        // controls = new GamepadMapping();
         dashboardTelemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 

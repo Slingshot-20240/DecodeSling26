@@ -1,29 +1,71 @@
 package org.firstinspires.ftc.teamcode.misc.gamepad;
 
+import com.qualcomm.robotcore.hardware.Gamepad;
+
 import dev.nextftc.bindings.Button;
 import dev.nextftc.ftc.Gamepads;
 
 public class GamepadMapping {
+    // GAMEPADS
+    private final Gamepad gamepad1;
+    private final Gamepad gamepad2;
+
+    // DRIVETRAIN
+    // --------------
+    public static double drive = 0.0;
+    public static double strafe = 0.0;
+    public static double turn = 0.0;
 
     // INTAKE
-    public Button intake;
+    public Toggle intake;
 
-    // SHOOT
-    public Button pidShoot;
-    public Button shootBack;
-    public Button shootTriangle;
-    public Button transfer;
+    // SHOOTER
+    public Toggle pidShoot;
+    public Toggle shootBack;
+    public Toggle shootTriangle;
 
     // PARK
-    public Button park;
+    public Toggle park;
 
-    public GamepadMapping() {
-        shootBack = Gamepads.gamepad2().rightBumper();
-        shootTriangle = Gamepads.gamepad2().leftBumper();
-        intake = Gamepads.gamepad1().rightBumper();
-        pidShoot = Gamepads.gamepad2().a();
-        park = Gamepads.gamepad1().dpadUp();
-        transfer = Gamepads.gamepad1().b();
+    public GamepadMapping(Gamepad gamepad1, Gamepad gamepad2) {
+        // GAMEPADS
+        this.gamepad1 = gamepad1;
+        this.gamepad2 = gamepad2;
+
+        // INTAKE
+        intake = new Toggle(false);
+
+        // SHOOTER
+        shootBack = new Toggle(false);
+        shootTriangle = new Toggle(false);
+        pidShoot = new Toggle(false);
+
+        // PARK
+        // TODO: Match to a button
+        park = new Toggle(false);
+    }
+
+    public void joystickUpdate() {
+        drive = gamepad1.left_stick_y;
+        strafe = gamepad1.left_stick_x;
+        turn = gamepad1.right_stick_x;
+    }
+
+    public void update() {
+        joystickUpdate();
+        // INTAKE
+        intake.update(gamepad1.left_bumper);
+
+        // SHOOTER
+        shootBack.update(gamepad1.right_trigger >= 0.5);
+        shootTriangle.update(gamepad1.left_trigger >= 0.5);
+        pidShoot.update(gamepad1.right_bumper);
+    }
+
+    public void resetMultipleControls(Toggle... toggles) {
+        for (Toggle toggle : toggles) {
+            toggle.set(false);
+        }
     }
 }
 

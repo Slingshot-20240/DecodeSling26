@@ -23,6 +23,9 @@ public class FSM {
 
     public void update() {
 
+        // follower class
+        // can do getHeading()
+        // can do getPose() for x y values
         robot.driverControlled.schedule();
 
         switch (state) {
