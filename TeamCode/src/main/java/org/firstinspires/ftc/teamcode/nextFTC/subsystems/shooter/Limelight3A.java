@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.Limelight3A;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
@@ -10,11 +9,11 @@ import dev.nextftc.core.commands.utility.LambdaCommand;
 import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.ftc.ActiveOpMode;
 
-public class Limelight3ASubsystem implements Subsystem {
-    public static Limelight3ASubsystem INSTANCE = new Limelight3ASubsystem();
-    private Limelight3ASubsystem() { }
+public class Limelight3A implements Subsystem {
+    public static Limelight3A INSTANCE = new Limelight3A();
+    private Limelight3A() { }
 
-    private Limelight3A limelight3A;
+    private com.qualcomm.hardware.limelightvision.Limelight3A limelight3A;
 
     public Command limelightDetection = new LambdaCommand()
             .setStart(() -> {
