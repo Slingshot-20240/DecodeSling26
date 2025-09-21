@@ -18,9 +18,16 @@ public class AutonSequencesGroup extends SubsystemGroup {
         );
     }
 
+    //Should spin up the shooter and shoot.
+    public final Command spinUpShoot = new SequentialGroup(
+            //Add Code here
+    ).named("SpinUpAndShoot");
+
     public final Command intake = new SequentialGroup(
             Intake.INSTANCE.in,
             Transfer.INSTANCE.transferOn
     ).named("Intake"); //Used to find bugs in logging
+
+
 
 }
