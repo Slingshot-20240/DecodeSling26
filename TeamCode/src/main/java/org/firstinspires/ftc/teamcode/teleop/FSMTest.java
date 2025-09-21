@@ -19,7 +19,7 @@ public class FSMTest extends NextFTCOpMode {
 
     @Override
     public void onInit() {
-        gamepad = new GamepadMapping();
+        gamepad = new GamepadMapping(gamepad1,gamepad2);
         fsm = new FSM(hardwareMap, gamepad);
         robot = fsm.robot;
     }
