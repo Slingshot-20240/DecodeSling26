@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.nextFTC.autonomous.AutonSequencesGroup;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.Intake;
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.Transfer;
+import org.firstinspires.ftc.teamcode.nextFTC.subsystems.transfer.Transfer;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.Shooter;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
@@ -142,7 +142,7 @@ public class PathingTest1 extends NextFTCOpMode {
         return new SequentialGroup(
                 new ParallelGroup(
                         Intake.INSTANCE.in,
-                        Transfer.INSTANCE.up
+                        Transfer.INSTANCE.transferOn
                 ),
                 new Delay(0.5)
         );
