@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import dev.nextftc.ftc.NextFTCOpMode;
 import dev.nextftc.hardware.impl.ServoEx;
 
+/*
 @TeleOp
 public class FlapTest extends NextFTCOpMode {
     public static double flapPos = 0.5;
@@ -20,3 +21,4 @@ public class FlapTest extends NextFTCOpMode {
         flap.setPosition(flapPos);
     }
 }
+ */
