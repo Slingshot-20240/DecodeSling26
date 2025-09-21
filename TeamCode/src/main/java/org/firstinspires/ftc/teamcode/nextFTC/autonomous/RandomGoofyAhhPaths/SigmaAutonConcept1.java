@@ -59,28 +59,26 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
     double visionOutput = 1;
 
     //--------------------------- INITIALIZE PATHS ---------------------------\\
-    //Start Pose, scoreBackPose
+    //Start Pose, scorePreloadPose
     private final Pose startPose = new Pose(40, 8, Math.toRadians(90));
     private final Pose scorePreloadPose = new Pose(60, 18, Math.toRadians(119));
 
-    //private final Pose scoreBackPose = new Pose(60, 18, Math.toRadians(65));
 
     //Set1 Poses
-    private final Pose s1control1 = new Pose(60, 18);
-    private final Pose s1control2 = new Pose(47, 32);
+    private final Pose s1control1 = new Pose(55, 32.5);
     private final Pose grabSet1Pose = new Pose(17, 36, Math.toRadians(180));
     private final Pose scoreSet1Pose = new Pose(60, 18, Math.toRadians(104));
 
     //Set2 Poses
-    private final Pose s2control1 = new Pose(60, 18);
-    private final Pose s2control2 = new Pose(48, 36);
+    private final Pose s2control1 = new Pose(47, 61);
     private final Pose grabSet2Pose = new Pose(17, 60, Math.toRadians(180));
     private final Pose scoreSet2Pose = new Pose(60, 18, Math.toRadians(90));
 
     //Set3 Poses - UPDATE VALUES
-    private final Pose s3control1 = new Pose(60, 18);
-    private final Pose s3control2 = new Pose(48, 36);
-    private final Pose grabSet3Pose = new Pose(17, 36, Math.toRadians(180));
+    private final Pose s3control1 = new Pose(51, 89);
+    private final Pose grabSet3Pose = new Pose(17, 83.8, Math.toRadians(180));
+    //Turns to go straight back
+    private final Pose turnToScoreSet3Pose = new Pose(17, 83.8, Math.toRadians(122));
     private final Pose scoreSet3Pose = new Pose(60, 18, Math.toRadians(90));
 
     //Park Pose
@@ -100,7 +98,7 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
 
         //Grab Nearest Set AND Vision Calc for Motif with Turret
         grabSet1 = follower().pathBuilder()
-                .addPath(new BezierCurve(scorePreloadPose, s1control1, s1control2, grabSet1Pose))
+                .addPath(new BezierCurve(scorePreloadPose, s1control1, grabSet1Pose))
                 .setLinearHeadingInterpolation(scorePreloadPose.getHeading(), grabSet1Pose.getHeading())
                 .build();
 
@@ -116,7 +114,7 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
 
         //--------- Set 2 ---------\\
         grabSet2 = follower().pathBuilder()
-                .addPath(new BezierCurve(scoreSet1Pose, s2control1, s2control2, grabSet2Pose))
+                .addPath(new BezierCurve(scoreSet1Pose, s2control1, grabSet2Pose))
                 .setLinearHeadingInterpolation(scoreSet1Pose.getHeading(), grabSet2Pose.getHeading())
                 .build();
 
@@ -130,13 +128,15 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
 
         //--------- Set 3 ---------\\
         grabSet3 = follower().pathBuilder()
-                .addPath(new BezierCurve(scoreSet1Pose, s3control1, s3control2, grabSet3Pose))
+                .addPath(new BezierCurve(scoreSet1Pose, s3control1, grabSet3Pose))
                 .setLinearHeadingInterpolation(scoreSet1Pose.getHeading(), grabSet3Pose.getHeading())
                 .build();
 
         scoreSet3 = follower().pathBuilder()
-                .addPath(new BezierLine(grabSet3Pose, scoreSet3Pose))
+                .addPath(new BezierLine(grabSet3Pose, turnToScoreSet3Pose))
                 .setLinearHeadingInterpolation(grabSet3Pose.getHeading(), scoreSet3Pose.getHeading())
+                .addPath(new BezierLine(turnToScoreSet3Pose,scoreSet3Pose))
+                .setConstantHeadingInterpolation(turnToScoreSet3Pose.getHeading())
                 .build();
 
         parkFromSet3 = new Path(new BezierCurve(scoreSet3Pose, parkPose));
@@ -164,9 +164,10 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
     public Command shootPreloads() {
         return new SequentialGroup(
                 new ParallelGroup(
-                        new FollowPath(scorePreload),
-                        AutonSequencesGroup.INSTANCE.intake
-                )
+                        new FollowPath(scorePreload, true),
+                        Turret.INSTANCE.toPreloadR
+                ),
+                AutonSequencesGroup.INSTANCE.spinUpShoot3
         );
     }
 
@@ -174,18 +175,18 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
         return new SequentialGroup(
                 new ParallelGroup(
                         new FollowPath(grabSet1),
-                        //Have a sequence for getting balls into scoring position
-                        //One in turret, 2 in intake
-                        Intake.INSTANCE.in
+                        AutonSequencesGroup.INSTANCE.intake3
                 )
         );
     }
 
     public Command shootSet1() {
         return new SequentialGroup(
-                new FollowPath(scoreSet1, true)
-                //Have a sequence for shooting 3
-                //AutonSequencesGroup.INSTANCE.shoot3
+                new ParallelGroup(
+                        new FollowPath(scoreSet1, true),
+                        Turret.INSTANCE.set1BackR
+                ),
+                AutonSequencesGroup.INSTANCE.spinUpShoot3
         );
     }
 
@@ -193,28 +194,27 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
         return new SequentialGroup(
                 new ParallelGroup(
                         new FollowPath(grabSet2),
-                        //Have a sequence for getting balls into scoring position
-                        //One in turret, 2 in intake
-                        Intake.INSTANCE.in
+                        AutonSequencesGroup.INSTANCE.intake3
                 )
         );
     }
 
     public Command shootSet2() {
         return new SequentialGroup(
-                new FollowPath(scoreSet2, true)
-                //Have a sequence for shooting 3
-                //AutonSequencesGroup.INSTANCE.shoot3
+                new ParallelGroup(
+                        new FollowPath(scoreSet2, true),
+                        Turret.INSTANCE.set2BackR
+                ),
+                AutonSequencesGroup.INSTANCE.spinUpShoot3
         );
     }
 
     public Command parkFromSet2() {
         return new SequentialGroup(
                 new ParallelGroup(
-                        //Reset Subsystems while parking
+                        AutonSequencesGroup.INSTANCE.resetSubsystems,
                         new FollowPath(parkFromSet2, true)
                 )
-
         );
     }
 
@@ -222,25 +222,25 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
         return new SequentialGroup(
                 new ParallelGroup(
                         new FollowPath(grabSet3),
-                        //Have a sequence for getting balls into scoring position
-                        //One in turret, 2 in intake
-                        Intake.INSTANCE.in
+                        AutonSequencesGroup.INSTANCE.intake3
                 )
         );
     }
 
     public Command shootSet3() {
         return new SequentialGroup(
-                new FollowPath(scoreSet3, true)
-                //Have a sequence for shooting 3
-                //AutonSequencesGroup.INSTANCE.shoot3
+                new ParallelGroup(
+                        new FollowPath(scoreSet3, true),
+                        Turret.INSTANCE.set3BackR
+                ),
+                AutonSequencesGroup.INSTANCE.spinUpShoot3
         );
     }
 
     public Command parkFromSet3() {
         return new SequentialGroup(
                 new ParallelGroup(
-                        //Reset Subsystems while parking
+                        AutonSequencesGroup.INSTANCE.resetSubsystems,
                         new FollowPath(parkFromSet3, true)
                 )
         );

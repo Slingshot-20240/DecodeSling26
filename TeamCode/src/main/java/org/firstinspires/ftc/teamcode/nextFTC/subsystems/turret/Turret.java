@@ -4,9 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.templates.Motor;
-import org.firstinspires.ftc.teamcode.nextFTC.subsystems.transfer.Transfer;
-
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.subsystems.Subsystem;

@@ -18,16 +18,23 @@ public class AutonSequencesGroup extends SubsystemGroup {
         );
     }
 
-    //Should spin up the shooter and shoot.
-    public final Command spinUpShoot = new SequentialGroup(
-            //Add Code here
-    ).named("SpinUpAndShoot");
+    //TODO - Make Sequences Logic
 
-    public final Command intake = new SequentialGroup(
+    //Should spin up the shooter and shoot.
+    public final Command spinUpShoot3 = new SequentialGroup(
+            //Add Code here
+    ).named("SpinUpAndShoot3");
+
+    //Should get balls ready to shoot, one in turret, two in intake
+    public final Command intake3 = new SequentialGroup(
             Intake.INSTANCE.in,
             Transfer.INSTANCE.transferOn
-    ).named("Intake"); //Used to find bugs in logging
+    ).named("Intake3");
 
-
+    //Should reset all subsystems, ready for tele
+    public final Command resetSubsystems = new SequentialGroup(
+            Intake.INSTANCE.in,
+            Transfer.INSTANCE.transferOn
+    ).named("ResetSubsystems");
 
 }
