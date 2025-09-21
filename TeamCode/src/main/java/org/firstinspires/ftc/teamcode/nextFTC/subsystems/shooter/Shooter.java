@@ -28,6 +28,9 @@ public class Shooter implements Subsystem {
     public DcMotorEx teleOuttakeR;
     public Servo teleVariableHood;
 
+    private final double backHardcodedVel = 1;
+    private final double frontHardcodedVel = .5;
+
     public Shooter (HardwareMap hwMap) {
         teleOuttakeL = hwMap.get(DcMotorEx.class, "outtakeLeft");
         teleOuttakeR = hwMap.get(DcMotorEx.class, "outtakeRight");
@@ -44,11 +47,22 @@ public class Shooter implements Subsystem {
     private static final double H = 39 - launchHeight; // y distance, cm distance from launch height to a little above hole on goal
     private static double R; // x distance, get from AprilTag
 
-    private static final double shootVel = Math.sqrt(H * g + g * Math.sqrt(Math.pow(R, 2) + Math.pow(H, 2)));
+    private static double shootVel;
 
-    // HOOD ANGLE CALCULATIONS
+    public double calculateShooterVel() {
+        // R = ; TODO: Update R with April Tag Value
+        shootVel = Math.sqrt(H * g + g * Math.sqrt(Math.pow(R, 2) + Math.pow(H, 2)));
+        return shootVel;
+    }
+
+    // HOOD ANGLE CALCULATIONS - TODO: ASK RUPAL
     // ---------------------------------
-    // double hoodAngle = Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * R));
+    private static double hoodAngle;
+
+    public double calculateHoodAngle() {
+        hoodAngle = Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * R));
+        return hoodAngle;
+    }
 
     // AUTONOMOUS COMMANDS - NextFTC
     // ----------------------------------
@@ -58,7 +72,7 @@ public class Shooter implements Subsystem {
             .elevatorFF(0) //compensates for gravity
             .build();
 
-    public enum outtake_vels {
+    public enum outtakeVels {
 
         PID_SHOOT(shootVel),
         HARDCODED_SHOOT_TRIANGLE(1), // TODO: CALC WITH FIELD
@@ -67,7 +81,7 @@ public class Shooter implements Subsystem {
 
         private final double outtake_vels;
 
-        outtake_vels(double pos) {
+        outtakeVels(double pos) {
             this.outtake_vels = pos;
         }
         public double getOuttakeVel() {
@@ -77,22 +91,22 @@ public class Shooter implements Subsystem {
 
     public Command pidShoot = new RunToVelocity(
             outtake_controller,
-            outtake_vels.PID_SHOOT.getOuttakeVel()
+            outtakeVels.PID_SHOOT.getOuttakeVel()
     ).requires(this);
 
     public Command triangleShoot = new RunToVelocity(
             outtake_controller,
-            outtake_vels.HARDCODED_SHOOT_TRIANGLE.getOuttakeVel()
+            outtakeVels.HARDCODED_SHOOT_TRIANGLE.getOuttakeVel()
     ).requires(this);
 
     public Command backShoot = new RunToVelocity(
             outtake_controller,
-            outtake_vels.HARDCODED_SHOOT_BACK.getOuttakeVel()
+            outtakeVels.HARDCODED_SHOOT_BACK.getOuttakeVel()
     ).requires(this);
 
     public Command idle = new RunToVelocity(
             outtake_controller,
-            outtake_vels.IDLE.getOuttakeVel()
+            outtakeVels.IDLE.getOuttakeVel()
     );
 
     // TODO: test these values
@@ -122,6 +136,10 @@ public class Shooter implements Subsystem {
         teleOuttakeR.setPower(power);
     }
 
+    public void setHoodAngle(double angle) {
+        teleVariableHood.setPosition(angle);
+    }
+
     public static double getShootVel() {
         return shootVel;
     }
@@ -133,5 +151,15 @@ public class Shooter implements Subsystem {
 
     public void hoodToFrontTriPos() {
         teleVariableHood.setPosition(0);
+    }
+
+    public void teleShootFromBack() {
+        teleOuttakeL.setPower(backHardcodedVel);
+        teleOuttakeR.setPower(backHardcodedVel);
+    }
+
+    public void teleShootFromFront() {
+        teleOuttakeL.setPower(frontHardcodedVel);
+        teleOuttakeR.setPower(frontHardcodedVel);
     }
 }

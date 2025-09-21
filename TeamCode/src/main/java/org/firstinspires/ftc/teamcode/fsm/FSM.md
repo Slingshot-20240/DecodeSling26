@@ -15,7 +15,6 @@ think about this more)
 
 Mecanisms
 - Intake
-- Shooter
-- Hood? - part of shooter
+- Shooter with Hood
 - Turret
 - Transfer
