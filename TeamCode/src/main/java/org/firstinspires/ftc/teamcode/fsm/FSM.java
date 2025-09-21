@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.fsm;
 
-import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Robot;
@@ -11,9 +9,6 @@ import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.Intake;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.Shooter;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.transfer.Transfer;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.turret.Turret;
-import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-
-import dev.nextftc.extensions.pedro.PedroComponent;
 
 public class FSM {
     // GENERAL ROBOT STATES + CLASSES
@@ -21,7 +16,6 @@ public class FSM {
     public FSMStates state = FSMStates.BASE_STATE;
     public ControlType type = ControlType.HARDCODED_CONTROL;
     private GamepadMapping gamepad;
-    private Follower follower;
 
     // SUBSYSTEMS
     private Intake intake;
@@ -29,7 +23,6 @@ public class FSM {
     private Transfer transfer;
     private Shooter shooter;
     private Drivetrain drivetrain;
-
 
     public FSM(HardwareMap hardwareMap, GamepadMapping gamepad) {
         robot = new Robot(hardwareMap, gamepad);
@@ -48,9 +41,11 @@ public class FSM {
         drivetrain.update();
         // Updates all other controls
         gamepad.update();
-        // Updates follower for localization x
-        follower.update();
-        Pose pose = follower.getPose();
+
+        // TODO: ODO IN TELE
+        // follower class
+        // can do getHeading()
+        // can do getPose() for x y values
 
         switch (state) {
             case BASE_STATE:
