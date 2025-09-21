@@ -24,6 +24,9 @@ public class FSM {
     private Shooter shooter;
     private Drivetrain drivetrain;
 
+    // MISC
+    private int turretPos;
+
     public FSM(HardwareMap hardwareMap, GamepadMapping gamepad) {
         robot = new Robot(hardwareMap, gamepad);
         this.gamepad = robot.controls;
@@ -46,6 +49,8 @@ public class FSM {
         // follower class
         // can do getHeading()
         // can do getPose() for x y values
+
+        turretPos = turret.calcTurretVal();
 
         switch (state) {
             case BASE_STATE:
@@ -76,7 +81,7 @@ public class FSM {
                 break;
 
             case SHOOTING:
-                turret.setTurretPos(turret.calcTurretVal(), 1);
+                turret.setTurretPos(turretPos, 1);
                 // turn transfer off while shooting until back to base state
                 transfer.transferOff();
                 // Hardcoded control AND we're at the back shooting zone
