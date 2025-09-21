@@ -161,6 +161,8 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
     }
 
     // Active Commands
+
+    //--------- PRELOADS ---------\\
     public Command shootPreloads() {
         return new SequentialGroup(
                 new ParallelGroup(
@@ -171,6 +173,7 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
         );
     }
 
+    //--------- SET 1 ---------\\
     public Command grabSet1() {
         return new SequentialGroup(
                 new ParallelGroup(
@@ -190,6 +193,7 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
         );
     }
 
+    //--------- SET 2 ---------\\
     public Command grabSet2() {
         return new SequentialGroup(
                 new ParallelGroup(
@@ -218,6 +222,7 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
         );
     }
 
+    //--------- SET 3 ---------\\
     public Command grabSet3() {
         return new SequentialGroup(
                 new ParallelGroup(
@@ -246,11 +251,14 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
         );
     }
 
+    //------------------------- INIT ------------------------\\
     @Override
     public void onInit() {
         buildPaths();
         initRoutine().schedule();
     }
+
+    //------------------------- MAIN LOOP ------------------------\\
 
     @Override
     public void onStartButtonPressed() {
