@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.fsm;
 
+import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Robot;
@@ -24,6 +26,9 @@ public class FSM {
     private Shooter shooter;
     private Drivetrain drivetrain;
 
+    // OTHER
+    private Follower follower;
+
     public FSM(HardwareMap hardwareMap, GamepadMapping gamepad) {
         robot = new Robot(hardwareMap, gamepad);
         this.gamepad = robot.controls;
@@ -42,10 +47,9 @@ public class FSM {
         // Updates all other controls
         gamepad.update();
 
-        // TODO: ODO IN TELE
-        // follower class
-        // can do getHeading()
-        // can do getPose() for x y values
+        double heading = follower.getHeading();
+        Pose pose = follower.getPose();
+        follower.update();
 
         switch (state) {
             case BASE_STATE:
@@ -76,7 +80,8 @@ public class FSM {
                 break;
 
             case SHOOTING:
-                turret.setTurretPos(turret.calcTurretVal(), 1);
+                // TODO: FIX THIS ASK BOOP - BEE
+                turret.setTurretPos(turret.calcTurretVal(pose.getX(), pose.getY(), pose.getX(), pose.getY(), pose.getHeading()), 1);
                 // turn transfer off while shooting until back to base state
                 transfer.transferOff();
                 // Hardcoded control AND we're at the back shooting zone
@@ -113,9 +118,6 @@ public class FSM {
 
         }
     }
-
-
-
 
     public enum FSMStates {
         BASE_STATE,

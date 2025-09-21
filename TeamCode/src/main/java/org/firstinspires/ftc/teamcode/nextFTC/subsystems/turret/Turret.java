@@ -38,9 +38,13 @@ public class Turret implements Subsystem {
     // TURRET CALCULATIONS
     // ----------------------------------
     private int turretEncoderVal = 0;
+    private double turretNeededRot = 0;
 
-    public int calcTurretVal() {
+    public int calcTurretVal(double xt, double yt, double xT, double yT, double headingRad) {
         // TODO: WITH MOTT'S THING
+        turretNeededRot = TurretMath.requiredRotation(xt, yt, xT, yT, headingRad);
+        // TODO: test how many ticks in 1 rotation (for now lets say it's 384 ticks)
+        turretEncoderVal = (int) (384.0 * turretNeededRot / 2.0 * Math.PI);
         return turretEncoderVal;
     }
 
@@ -49,7 +53,6 @@ public class Turret implements Subsystem {
 
     public enum turretVals {
 
-        // TODO: ISHAAN DO STATES PLEASE :)
         PRELOAD_BACK(250),
         S1_BACK(200),
         S2_BACK(150),
