@@ -38,7 +38,7 @@ public class NextFTCSampleAuton extends NextFTCOpMode {
                         Servo_Template.INSTANCE.close
                 ),
                 new Delay(0.5),
-                AutonSequencesGroup.INSTANCE.score
+                AutonSequencesGroup.INSTANCE.intake
         );
     }
 
