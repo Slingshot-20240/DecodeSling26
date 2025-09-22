@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.nextFTC.autonomous;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.intake.Intake;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.transfer.Transfer;
 import org.firstinspires.ftc.teamcode.nextFTC.subsystems.shooter.Shooter;
+import org.firstinspires.ftc.teamcode.nextFTC.subsystems.turret.Turret;
 
 
 import dev.nextftc.core.commands.Command;
@@ -14,7 +15,9 @@ public class AutonSequencesGroup extends SubsystemGroup {
 
     private AutonSequencesGroup() {
         super(
-                Intake.INSTANCE, Transfer.INSTANCE, Shooter.INSTANCE
+                AutonSequencesGroup.INSTANCE,
+                Intake.INSTANCE, Transfer.INSTANCE,
+                Turret.INSTANCE, Shooter.INSTANCE
         );
     }
 
@@ -33,8 +36,8 @@ public class AutonSequencesGroup extends SubsystemGroup {
 
     //Should reset all subsystems, ready for tele
     public final Command resetSubsystems = new SequentialGroup(
-            Intake.INSTANCE.in,
-            Transfer.INSTANCE.transferOn
+            Intake.INSTANCE.idle,
+            Transfer.INSTANCE.transferOff
     ).named("ResetSubsystems");
 
 }
