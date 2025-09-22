@@ -11,7 +11,7 @@ public class TurretMath {
 
         double xt = 0.0, yt = 0.0;     // turret position (get from odo)
         double xT = 0.0, yT = 4.0;     // target position (hard code)
-        double headingDeg = Math.toDegrees(follower.getHeading()); //0.0;      // turret’s current heading (get from encoder value and convert to angle)
+        double headingDeg = 0.0;      // turret’s current heading (get from encoder value and convert to angle)
 
         double dthetaDeg = TurretMath.requiredRotationDeg(xt, yt, xT, yT, headingDeg);
 
