@@ -1,6 +1,22 @@
 package org.firstinspires.ftc.teamcode.nextFTC.subsystems.turret;
 
+import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
+
 public class TurretMath {
+
+    public static void main(String[] args, Follower follower) {
+        follower.update();
+        Pose pose = follower.getPose();
+
+        double xt = 0.0, yt = 0.0;     // turret position (get from odo)
+        double xT = 0.0, yT = 4.0;     // target position (hard code)
+        double headingDeg = Math.toDegrees(follower.getHeading()); //0.0;      // turret’s current heading (get from encoder value and convert to angle)
+
+        double dthetaDeg = TurretMath.requiredRotationDeg(xt, yt, xT, yT, headingDeg);
+
+        System.out.printf("Rotate turret by %.2f degrees%n", dthetaDeg);
+    }
 
     // Normalize any angle to (-pi, pi] /
     public static double wrapToPi(double angle) {
