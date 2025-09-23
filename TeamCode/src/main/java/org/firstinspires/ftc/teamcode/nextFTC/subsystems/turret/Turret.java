@@ -15,6 +15,7 @@ public class Turret implements Subsystem {
 
     // NextFTC Shooter Instance
     public static final Turret INSTANCE = new Turret();
+    TurretMath turretMath = new TurretMath();
     private Turret() { }
 
     // NextFTC Hardware
@@ -32,7 +33,8 @@ public class Turret implements Subsystem {
 
     //Control System
     private final ControlSystem turret_controller = ControlSystem.builder()
-            .posPid(0.005, 0, 0) //turret_controller
+            //.posPid(0.005, 0, 0) //turret_controller
+            //ff elevator not needed because not a lift... PIG unnecessary
             .build();
 
     // TURRET CALCULATIONS
