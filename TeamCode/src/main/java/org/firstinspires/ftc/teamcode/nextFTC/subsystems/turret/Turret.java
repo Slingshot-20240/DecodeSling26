@@ -55,10 +55,19 @@ public class Turret implements Subsystem {
 
     public enum turretVals {
 
-        PRELOAD_BACK(250),
-        S1_BACK(200),
-        S2_BACK(150),
-        S3_BACK(100);
+        //RED TURRET POSITIONS
+        PRELOAD_BACK_RED(250),
+        SCAN_TAG_RED(100),
+        S1_BACK_RED(200),
+        S2_BACK_RED(150),
+        S3_BACK_RED(100),
+
+        //BLUE TURRET POSITIONS
+        PRELOAD_BACK_BLUE(-250),
+        SCAN_TAG_BLUE(-100),
+        S1_BACK_BLUE(-200),
+        S2_BACK_BLUE(-150),
+        S3_BACK_BLUE(-100);
 
         private final double turret_vals;
 
@@ -70,48 +79,59 @@ public class Turret implements Subsystem {
         }
     }
 
-    // TODO: ISHAAN DO COMMANDS FOR AUTO TOO :)
-
-    //-------------RED TURRET POSITIONS--------------\\
-    public Command toPreloadR = new RunToPosition(
-            turret_controller,
-            turretVals.PRELOAD_BACK.getTurretVal()
-    ).requires(this);
-
-    public Command set1BackR = new RunToPosition(
-            turret_controller,
-            turretVals.S1_BACK.getTurretVal()
-    ).requires(this);
-
-    public Command set2BackR = new RunToPosition(
-            turret_controller,
-            turretVals.S2_BACK.getTurretVal()
-    ).requires(this);
-
-    public Command set3BackR = new RunToPosition(
-            turret_controller,
-            turretVals.S3_BACK.getTurretVal()
-    ).requires(this);
 
     //-------------BLUE TURRET POSITIONS-------------\\
     public Command toPreloadB = new RunToPosition(
             turret_controller,
-            turretVals.PRELOAD_BACK.getTurretVal()
+            turretVals.PRELOAD_BACK_BLUE.getTurretVal()
     ).requires(this);
 
     public Command set1BackB = new RunToPosition(
             turret_controller,
-            turretVals.S1_BACK.getTurretVal()
+            turretVals.S1_BACK_BLUE.getTurretVal()
     ).requires(this);
 
     public Command set2BackB = new RunToPosition(
             turret_controller,
-            turretVals.S2_BACK.getTurretVal()
+            turretVals.S2_BACK_BLUE.getTurretVal()
     ).requires(this);
 
     public Command set3BackB = new RunToPosition(
             turret_controller,
-            turretVals.S3_BACK.getTurretVal()
+            turretVals.S3_BACK_BLUE.getTurretVal()
+    ).requires(this);
+
+    public Command scanTagB = new RunToPosition(
+            turret_controller,
+            turretVals.SCAN_TAG_BLUE.getTurretVal()
+    ).requires(this);
+
+
+
+    //-------------RED TURRET POSITIONS-------------\\
+    public Command toPreloadR = new RunToPosition(
+            turret_controller,
+            turretVals.PRELOAD_BACK_RED.getTurretVal()
+    ).requires(this);
+
+    public Command set1BackR = new RunToPosition(
+            turret_controller,
+            turretVals.S1_BACK_RED.getTurretVal()
+    ).requires(this);
+
+    public Command set2BackR = new RunToPosition(
+            turret_controller,
+            turretVals.S2_BACK_RED.getTurretVal()
+    ).requires(this);
+
+    public Command set3BackR = new RunToPosition(
+            turret_controller,
+            turretVals.S3_BACK_RED.getTurretVal()
+    ).requires(this);
+
+    public Command scanTagR = new RunToPosition(
+            turret_controller,
+            turretVals.SCAN_TAG_RED.getTurretVal()
     ).requires(this);
 
     // TELEOP METHODS
@@ -136,6 +156,15 @@ public class Turret implements Subsystem {
 
     public void shootFrontRed() {
         teleTurret.setTargetPosition(400);
+        teleTurret.setPower(1);
+    }
+    public void scanTagBlue() {
+        teleTurret.setTargetPosition(500);
+        teleTurret.setPower(1);
+    }
+
+    public void scanTagRed() {
+        teleTurret.setTargetPosition(500);
         teleTurret.setPower(1);
     }
 
