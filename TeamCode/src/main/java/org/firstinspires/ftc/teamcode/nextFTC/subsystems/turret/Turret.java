@@ -79,7 +79,6 @@ public class Turret implements Subsystem {
         }
     }
 
-
     //-------------BLUE TURRET POSITIONS-------------\\
     public Command toPreloadB = new RunToPosition(
             turret_controller,
