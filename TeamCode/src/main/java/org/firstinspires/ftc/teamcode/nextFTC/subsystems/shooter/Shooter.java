@@ -68,7 +68,7 @@ public class Shooter implements Subsystem {
     // ----------------------------------
 
     private final ControlSystem outtake_controller = ControlSystem.builder()
-            .posPid(0.005, 0, 0) //out_controller
+            .velPid(0.005, 0, 0) //out_controller
             //.elevatorFF(0) //compensates for gravity
             .build();
 
