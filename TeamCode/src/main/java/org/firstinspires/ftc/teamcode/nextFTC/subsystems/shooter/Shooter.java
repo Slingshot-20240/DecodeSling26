@@ -27,6 +27,8 @@ public class Shooter implements Subsystem {
     // TeleOp Hardware and Constructor
     public DcMotorEx teleOuttakeL;
     public DcMotorEx teleOuttakeR;
+
+    // TODO: BEE WHEN CONFIGURING REVERSE ONE OF THESE
     public Servo teleVariableHoodR;
     public Servo teleVariableHoodL;
 

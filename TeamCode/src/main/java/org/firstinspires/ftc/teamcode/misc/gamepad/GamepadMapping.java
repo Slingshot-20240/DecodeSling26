@@ -27,6 +27,9 @@ public class GamepadMapping {
     // PARK
     public Toggle park;
 
+    // MISC
+    public Toggle failSafeReset;
+
     public GamepadMapping(Gamepad gamepad1, Gamepad gamepad2) {
         // GAMEPADS
         this.gamepad1 = gamepad1;
@@ -43,6 +46,9 @@ public class GamepadMapping {
         // PARK
         // TODO: Match to a button
         park = new Toggle(false);
+
+        // MISC
+        failSafeReset = new Toggle(false);
     }
 
     public void joystickUpdate() {
@@ -60,6 +66,8 @@ public class GamepadMapping {
         shootBack.update(gamepad1.right_trigger >= 0.5);
         shootTriangle.update(gamepad1.left_trigger >= 0.5);
         pidShoot.update(gamepad1.right_bumper);
+
+        failSafeReset.update(gamepad2.dpad_down);
     }
 
     public void resetMultipleControls(Toggle... toggles) {
