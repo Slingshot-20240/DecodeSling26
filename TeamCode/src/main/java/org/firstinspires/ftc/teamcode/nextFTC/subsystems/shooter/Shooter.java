@@ -19,19 +19,22 @@ public class Shooter implements Subsystem {
     private Shooter() { }
 
     // NextFTC Hardware
-    private final MotorEx autoOuttakeL = new MotorEx("outtakeLeft"); // 0 CH
+    private final MotorEx autoOuttakeL = new MotorEx("outtakeLeft");
     private final MotorEx autoOuttakeR = new MotorEx("outtakeRight");
-    private final ServoEx autoVariableHood = new ServoEx("variableHood");// 2 CH
+    private final ServoEx autoVariableHoodR = new ServoEx("variableHoodR");
+    private final ServoEx autoVariableHoodL = new ServoEx("variableHoodL");
 
     // TeleOp Hardware and Constructor
     public DcMotorEx teleOuttakeL;
     public DcMotorEx teleOuttakeR;
-    public Servo teleVariableHood;
+    public Servo teleVariableHoodR;
+    public Servo teleVariableHoodL;
 
     public Shooter (HardwareMap hwMap) {
         teleOuttakeL = hwMap.get(DcMotorEx.class, "outtakeLeft");
         teleOuttakeR = hwMap.get(DcMotorEx.class, "outtakeRight");
-        teleVariableHood = hwMap.get(Servo.class, "variableHood");
+        teleVariableHoodR = hwMap.get(Servo.class, "variableHoodR");
+        teleVariableHoodL = hwMap.get(Servo.class, "variableHoodL");
 
         teleOuttakeL.setDirection(DcMotorSimple.Direction.REVERSE);
     }
@@ -120,15 +123,15 @@ public class Shooter implements Subsystem {
             outtakeVels.IDLE.getOuttakeVel()
     );
 
-    // TODO: test these values
+    // TODO: test these values & ISHAAN ADD OTHER SERVO
     public Command upTriangle = new SetPosition(
-            autoVariableHood,
+            autoVariableHoodR,
             0.1
     ).requires(this);
 
 
     public Command downBack = new SetPosition(
-            autoVariableHood,
+            autoVariableHoodR,
             0.2
     ).requires(this);
 
@@ -148,7 +151,8 @@ public class Shooter implements Subsystem {
     }
 
     public void setHoodAngle(double angle) {
-        teleVariableHood.setPosition(angle);
+        teleVariableHoodR.setPosition(angle);
+        teleVariableHoodL.setPosition(angle);
     }
 
     public static double getShootVel() {
@@ -157,11 +161,13 @@ public class Shooter implements Subsystem {
 
     // TODO: test these two
     public void hoodToBackTriPos() {
-        teleVariableHood.setPosition(Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * back_dist)) / 2 * Math.PI);
+        teleVariableHoodR.setPosition(Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * back_dist)) / 2 * Math.PI);
+        teleVariableHoodL.setPosition(Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * back_dist)) / 2 * Math.PI);
     }
 
     public void hoodToFrontTriPos() {
-        teleVariableHood.setPosition(Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * front_dist)) / 2 * Math.PI);
+        teleVariableHoodR.setPosition(Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * front_dist)) / 2 * Math.PI);
+        teleVariableHoodL.setPosition(Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * front_dist)) / 2 * Math.PI);
     }
 
     public void teleShootFromBack() {
