@@ -28,9 +28,6 @@ public class Shooter implements Subsystem {
     public DcMotorEx teleOuttakeR;
     public Servo teleVariableHood;
 
-    private final double backHardcodedVel = 1;
-    private final double frontHardcodedVel = .5;
-
     public Shooter (HardwareMap hwMap) {
         teleOuttakeL = hwMap.get(DcMotorEx.class, "outtakeLeft");
         teleOuttakeR = hwMap.get(DcMotorEx.class, "outtakeRight");
@@ -44,15 +41,28 @@ public class Shooter implements Subsystem {
 
     private static final double launchHeight = 0; // TODO update this with CAD
     private static final double g = 9.81;
-    private static final double H = 39 - launchHeight; // y distance, cm distance from launch height to a little above hole on goal
-    private static double R; // x distance, get from AprilTag
-
+    private static final double H = .39 - launchHeight; // y distance, m distance from launch height to a little above hole on goal
     private static double shootVel;
+    private static double R; // TODO: update R with April Tag value
+
+    // Hardcoded distances from tip of triangle points to the middle of the goal (meters)
+    // TODO: ADJUST FOR ROBOT DIMENSIONS
+    static double front_dist = 2.1844;
+    static double back_dist = 3.2004;
 
     public double calculateShooterVel() {
-        // R = ; TODO: Update R with April Tag Value
+        double convertedVel = 0;
+        double power = 0;
+        // TODO: update to RPM
         shootVel = Math.sqrt(H * g + g * Math.sqrt(Math.pow(R, 2) + Math.pow(H, 2)));
-        return shootVel;
+        // .096 is the diameter in m of the flywheel
+        power = convertVelToRPM(shootVel);
+        return power;
+    }
+
+    public static double convertVelToRPM(double vel) {
+        double newVel = (vel * 60) / 2 * .096 * Math.PI; // vel in RPM
+        return newVel/6000;
     }
 
     // HOOD ANGLE CALCULATIONS - TODO: ASK RUPAL
@@ -60,7 +70,7 @@ public class Shooter implements Subsystem {
     private static double hoodAngle;
 
     public double calculateHoodAngle() {
-        hoodAngle = Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * R));
+        hoodAngle = Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * R)) / 2 * Math.PI;
         return hoodAngle;
     }
 
@@ -73,10 +83,11 @@ public class Shooter implements Subsystem {
             .build();
 
     public enum outtakeVels {
-
         PID_SHOOT(shootVel),
-        HARDCODED_SHOOT_TRIANGLE(1), // TODO: CALC WITH FIELD
-        HARDCODED_SHOOT_BACK(1), // TODO: CALC WITH FIELD
+        // 5.059
+        HARDCODED_SHOOT_TRIANGLE(convertVelToRPM(Math.sqrt(H * g + g * Math.sqrt(Math.pow(front_dist, 2) + Math.pow(H, 2))))),
+        // 5.954
+        HARDCODED_SHOOT_BACK(convertVelToRPM(Math.sqrt(H * g + g * Math.sqrt(Math.pow(back_dist, 2) + Math.pow(H, 2))))),
         IDLE(0);
 
         private final double outtake_vels;
@@ -146,20 +157,20 @@ public class Shooter implements Subsystem {
 
     // TODO: test these two
     public void hoodToBackTriPos() {
-        teleVariableHood.setPosition(1);
+        teleVariableHood.setPosition(Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * back_dist)) / 2 * Math.PI);
     }
 
     public void hoodToFrontTriPos() {
-        teleVariableHood.setPosition(0);
+        teleVariableHood.setPosition(Math.atan(Math.pow(Shooter.getShootVel(), 2)/(g * front_dist)) / 2 * Math.PI);
     }
 
     public void teleShootFromBack() {
-        teleOuttakeL.setPower(backHardcodedVel);
-        teleOuttakeR.setPower(backHardcodedVel);
+        teleOuttakeL.setPower(outtakeVels.HARDCODED_SHOOT_BACK.getOuttakeVel());
+        teleOuttakeR.setPower(outtakeVels.HARDCODED_SHOOT_BACK.getOuttakeVel());
     }
 
     public void teleShootFromFront() {
-        teleOuttakeL.setPower(frontHardcodedVel);
-        teleOuttakeR.setPower(frontHardcodedVel);
+        teleOuttakeL.setPower(outtakeVels.HARDCODED_SHOOT_TRIANGLE.getOuttakeVel());
+        teleOuttakeR.setPower(outtakeVels.HARDCODED_SHOOT_TRIANGLE.getOuttakeVel());
     }
 }
