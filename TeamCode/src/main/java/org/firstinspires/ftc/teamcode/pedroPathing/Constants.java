@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Constants {
     public static FollowerConstants followerConstants = new FollowerConstants()
-            //.mass(kg)
+            .mass(5.2)
 
             //Forward Zero Power Acceleration
             //.forwardZeroPowerAcceleration(deceleration)
@@ -59,10 +59,10 @@ public class Constants {
             .rightRearMotorName("rightBack")
             .leftRearMotorName("leftFront")
             .leftFrontMotorName("leftBack")
-            .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .leftFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .leftRearMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .rightFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
+            .rightRearMotorDirection(DcMotorSimple.Direction.REVERSE)
 
             //Forward Velocity Tuner
             //.xVelocity(velocity)
@@ -83,8 +83,8 @@ public class Constants {
                     )
             )
             //Offset
-            .forwardPodY(5)
-            .strafePodX(5)
+            .forwardPodY(5.5)
+            .strafePodX(1.1)
 
             //Encoder Directions
             .forwardEncoderDirection(Encoder.REVERSE)
