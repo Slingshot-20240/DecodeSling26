@@ -11,7 +11,9 @@ import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.hardware.controllable.RunToVelocity;
 import dev.nextftc.hardware.impl.MotorEx;
 import dev.nextftc.hardware.impl.ServoEx;
+import dev.nextftc.hardware.positionable.ServoGroup;
 import dev.nextftc.hardware.positionable.SetPosition;
+import dev.nextftc.hardware.positionable.SetPositions;
 
 public class Shooter implements Subsystem {
     // NextFTC Shooter Instance
@@ -126,22 +128,23 @@ public class Shooter implements Subsystem {
     );
 
     // TODO: test these values & ISHAAN ADD OTHER SERVO
-    public Command upTriangle = new SetPosition(
-            autoVariableHoodR,
-            0.1
+    public Command upTriangle = new SetPositions(
+            autoVariableHoodL.to(0.1),
+            autoVariableHoodR.to(0.1)
+    );
+
+
+    public Command downBack = new SetPositions(
+            autoVariableHoodL.to(0.2),
+            autoVariableHoodR.to(0.2)
     ).requires(this);
 
 
-    public Command downBack = new SetPosition(
-            autoVariableHoodR,
-            0.2
-    ).requires(this);
 
     @Override
     public void periodic() {
         autoOuttakeL.setPower(outtake_controller.calculate(autoOuttakeL.getState()));
         autoOuttakeR.setPower(outtake_controller.calculate(autoOuttakeR.getState()));
-
     }
 
     // TELEOP METHODS
@@ -153,8 +156,8 @@ public class Shooter implements Subsystem {
     }
 
     public void setHoodAngle(double angle) {
-        teleVariableHoodR.setPosition(angle);
         teleVariableHoodL.setPosition(angle);
+        teleVariableHoodR.setPosition(angle);
     }
 
     public static double getShootVel() {
