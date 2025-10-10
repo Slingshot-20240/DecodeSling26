@@ -156,7 +156,7 @@ public class SigmaAutonConcept1 extends NextFTCOpMode {
 
                 new ParallelGroup(
                         Intake.INSTANCE.idle,
-                        Transfer.INSTANCE.transferOff
+                        Transfer.INSTANCE.transferOn
                 )
         );
     }
