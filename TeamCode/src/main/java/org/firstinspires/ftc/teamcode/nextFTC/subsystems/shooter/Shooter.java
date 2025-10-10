@@ -43,6 +43,8 @@ public class Shooter implements Subsystem {
         teleVariableHoodL = hwMap.get(Servo.class, "variableHoodL");
 
         teleOuttakeL.setDirection(DcMotorSimple.Direction.REVERSE);
+        teleVariableHoodL.setDirection(Servo.Direction.REVERSE);
+
     }
 
     // SHOOTER CALCULATIONS
