@@ -37,7 +37,7 @@ public class AutonSequencesGroup extends SubsystemGroup {
     //Should reset all subsystems, ready for tele
     public final Command resetSubsystems = new SequentialGroup(
             Intake.INSTANCE.idle,
-            Transfer.INSTANCE.transferOff
+            Transfer.INSTANCE.transferOn
     ).named("ResetSubsystems");
 
 }

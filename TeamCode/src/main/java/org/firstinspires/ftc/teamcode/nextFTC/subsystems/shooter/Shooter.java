@@ -31,6 +31,8 @@ public class Shooter implements Subsystem {
     public DcMotorEx teleOuttakeR;
 
     // TODO: BEE WHEN CONFIGURING REVERSE ONE OF THESE
+    //ishaan the goat already reversed it like a major league pro cricket player
+    //LE BRONNNNNNN JAMESSS
     public Servo teleVariableHoodR;
     public Servo teleVariableHoodL;
 
